@@ -4,8 +4,8 @@ $page_name = 'data-list';
 require __DIR__ . '/parts/__connect_db.php';
 ?>
 
-<?php require __DIR__. './parts/__html_head.php';?>
-<?php include __DIR__. './parts/__navbar.php';?>
+<?php require __DIR__ . '/parts/__html_head.php'; ?>
+<?php include __DIR__ . '/parts/__navbar.php'; ?>
 
 
 
@@ -14,13 +14,15 @@ require __DIR__ . '/parts/__connect_db.php';
         <div class="col d-flex justify-content-end">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-<!--                            <li class="page-item ">-->
-<!--                                <a class="page-link" href="?page=--><?//= $page-1 ?><!--">Previous</a>-->
-<!--                            </li>-->
-<!---->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="?page=">Next</a>-->
-<!--                            </li>-->
+                    <!--                            <li class="page-item ">-->
+                    <!--                                <a class="page-link" href="?page=-->
+                    <?//= $page-1 ?>
+                    <!--">Previous</a>-->
+                    <!--                            </li>-->
+                    <!---->
+                    <!--                            <li class="page-item">-->
+                    <!--                                <a class="page-link" href="?page=">Next</a>-->
+                    <!--                            </li>-->
                 </ul>
             </nav>
 
@@ -31,14 +33,14 @@ require __DIR__ . '/parts/__connect_db.php';
     <table class="table table-striped">
         <!-- `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` -->
         <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">姓名</th>
-            <th scope="col">電郵</th>
-            <th scope="col">手機</th>
-            <th scope="col">生日</th>
-            <th scope="col">地址</th>
-        </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">姓名</th>
+                <th scope="col">電郵</th>
+                <th scope="col">手機</th>
+                <th scope="col">生日</th>
+                <th scope="col">地址</th>
+            </tr>
         </thead>
         <tbody>
 
@@ -46,28 +48,28 @@ require __DIR__ . '/parts/__connect_db.php';
     </table>
 
 </div>
-<?php include __DIR__. './parts/__scripts.php';?>
+<?php include __DIR__ . '/parts/__scripts.php'; ?>
 
 <script>
     const tbody = document.querySelector('tbody');
     let pageData;
 
-    const  hashHandler = function (event){
+    const hashHandler = function(event) {
         let h = parseInt(location.hash.slice(1)) || 1;
-        if (h<1) h=1;
+        if (h < 1) h = 1;
         console.log(`h: ${h}`);
         getData(h);
     };
-    window.addEventListener('hashchange',hashHandler);
+    window.addEventListener('hashchange', hashHandler);
     hashHandler();
 
-    const pageItemTpl = (o) =>{
+    const pageItemTpl = (o) => {
         return `<li class="page-item ${o.active} ">
                      <a class="page-link" href="#${o.page}">${o.page}</a>
                 </li>`;
     };
 
-    const tableRowTpl = (o)=>{
+    const tableRowTpl = (o) => {
         return `
         <tr>
             <td>${o.sid}</td>
@@ -81,30 +83,33 @@ require __DIR__ . '/parts/__connect_db.php';
     };
 
 
-    function getData(page=1){
-    fetch('data-list2-api.php?page='+ page)
-        .then(r => r.json())
-        .then(obj => {
-            console.log(obj);
-            pageData = obj;
-            let str = '';
-            for(let i of obj.rows){
-                str += tableRowTpl(i);
-            }
-            tbody.innerHTML = str;
-
-            str = '';
-            for (let i=obj.page-3;i<=obj.page+3; i++){
-                if(i<1) continue;
-                if(i>obj.totalPages) continue;
-                const o = {page:i,active:''}
-                if(obj.page === i ){
-                    o.active = 'active';
+    function getData(page = 1) {
+        fetch('data-list2-api.php?page=' + page)
+            .then(r => r.json())
+            .then(obj => {
+                console.log(obj);
+                pageData = obj;
+                let str = '';
+                for (let i of obj.rows) {
+                    str += tableRowTpl(i);
                 }
-                str += pageItemTpl(o);
-            }
-            document.querySelector('.pagination').innerHTML = str;
-        });
+                tbody.innerHTML = str;
+
+                str = '';
+                for (let i = obj.page - 3; i <= obj.page + 3; i++) {
+                    if (i < 1) continue;
+                    if (i > obj.totalPages) continue;
+                    const o = {
+                        page: i,
+                        active: ''
+                    }
+                    if (obj.page === i) {
+                        o.active = 'active';
+                    }
+                    str += pageItemTpl(o);
+                }
+                document.querySelector('.pagination').innerHTML = str;
+            });
     }
 </script>
-<?php include __DIR__. './parts/__html_foot.php';?>
+<?php include __DIR__ . '/parts/__html_foot.php'; ?>

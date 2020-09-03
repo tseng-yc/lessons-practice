@@ -1,10 +1,10 @@
 <?php
 $page_title = '登入';
 $page_name = 'login';
-require __DIR__. './parts/__connect_db.php';
+require __DIR__ . '/parts/__connect_db.php';
 ?>
-<?php require __DIR__. './parts/__html_head.php'; ?>
-<?php include __DIR__. './parts/__navbar.php'; ?>
+<?php require __DIR__ . '/parts/__html_head.php'; ?>
+<?php include __DIR__ . '/parts/__navbar.php'; ?>
 
 <div class="container">
     <div class="row">
@@ -24,18 +24,18 @@ require __DIR__. './parts/__connect_db.php';
         </div>
     </div>
 </div>
-<?php include __DIR__. './parts/__scripts.php'; ?>
+<?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
-    function checkForm(){
+    function checkForm() {
         const fd = new FormData(document.form1);
         fetch('login-api.php', {
-            method: 'POST',
-            body: fd
-        })
+                method: 'POST',
+                body: fd
+            })
             .then(r => r.json())
             .then(obj => {
                 console.log(obj);
-                if(obj.success){
+                if (obj.success) {
                     alert('登入成功');
                     location.href = 'data-list-pages.php';
                 } else {
@@ -46,4 +46,4 @@ require __DIR__. './parts/__connect_db.php';
     }
 </script>
 
-<?php include __DIR__. './parts/__html_foot.php'; ?>
+<?php include __DIR__ . '/parts/__html_foot.php'; ?>

@@ -14,15 +14,15 @@ $output = [
     'rows' => [],
 ];
 
-$page = isset($_GET['page']) ? intval($_GET['page']):1;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 
 
-$t_sql="SELECT COUNT(*) FROM `address_book`";
+$t_sql = "SELECT COUNT(*) FROM `address_book`";
 //$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 //$totalPages = ceil($totalRows/$perPage);
 $output['totalRows'] = $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
-$output['totalPages'] = $totalPages = ceil($totalRows/$perPage);
+$output['totalPages'] = $totalPages = ceil($totalRows / $perPage);
 
 
 /*<?php
@@ -40,8 +40,8 @@ if ($totalRows>0){
 
 ?>
 
-<?php require __DIR__. './parts/__html_head.php'?>
-<?php include __DIR__. './parts/__navbar.php'?>
+<?php require __DIR__. '/parts/__html_head.php'?>
+<?php include __DIR__. '/parts/__navbar.php'?>
 
 <div class="container">
     <table class="table table-striped">
@@ -108,7 +108,7 @@ if ($totalRows>0){
     </table>
 
 </div>
-<?php include __DIR__. './parts/__scripts.php'?>
+<?php include __DIR__. '/parts/__scripts.php'?>
 
 <script>
 
@@ -129,19 +129,19 @@ if ($totalRows>0){
         }
     }
 </script>
-<?php include __DIR__. './parts/__html_foot.php'?>
+<?php include __DIR__. '/parts/__html_foot.php'?>
 
  ?>*/
 
 
-if($totalRows > 0){
-if($page < 1) $page=1;
-if($page > $totalPages) $page=$totalPages;
-$output['page'] = $page;
+if ($totalRows > 0) {
+    if ($page < 1) $page = 1;
+    if ($page > $totalPages) $page = $totalPages;
+    $output['page'] = $page;
 
-$sql = sprintf("SELECT * FROM `address_book` ORDER BY sid DESC LIMIT %s, %s", ($page-1)*$perPage, $perPage);
-$stmt = $pdo->query($sql);
-$output['rows'] = $stmt->fetchAll();
+    $sql = sprintf("SELECT * FROM `address_book` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $stmt = $pdo->query($sql);
+    $output['rows'] = $stmt->fetchAll();
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

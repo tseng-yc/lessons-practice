@@ -1,10 +1,10 @@
 <?php
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
 
-if(! isset($_SESSION['admin'])){
-    header('Location: data-list.php');
+if (!isset($_SESSION['admins'])) {
+    header('Location: data-list-pages.php');
     exit;
 }

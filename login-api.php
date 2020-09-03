@@ -1,5 +1,5 @@
 <?php
-require __DIR__. './parts/__connect_db.php';
+require __DIR__ . '/parts/__connect_db.php';
 
 header('Content-Type:applicayion/json');
 
@@ -19,13 +19,13 @@ $sql = "SELECT `sid`, `account`, `nickname`
         WHERE `account`=? AND `password`=SHA1(?)";
 
 $stmt = $pdo->prepare($sql);
-$stmt ->execute([
+$stmt->execute([
     $account,
     $password,
 ]);
 
 
-if($stmt->rowCount()){
+if ($stmt->rowCount()) {
     $output['success'] = true;
     $_SESSION['admins'] = $stmt->fetch();
 }
